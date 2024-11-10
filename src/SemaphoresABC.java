@@ -21,8 +21,8 @@ public class SemaphoresABC {
             try {
                 for (int i = 0; i < COUNT; i++) {
                     a.acquire();
-                    System.out.println("A ");
-                    System.out.println("A ");
+                    System.out.print("A ");
+                    System.out.print("A ");
                     b.release();
                     Thread.sleep(DELAY);
                 }
@@ -42,7 +42,7 @@ public class SemaphoresABC {
             try {
                 for (int i = 0; i < COUNT ; i++) {
                     b.acquire();
-                    System.out.println("B ");
+                    System.out.print("B ");
                     c.release();
                     Thread.sleep(DELAY);
                 }
@@ -62,7 +62,7 @@ public class SemaphoresABC {
             try {
                 for (int i = 0; i < COUNT; i++) {
                     c.acquire();
-                    System.out.println("C ");
+                    System.out.print("C ");
                     a.release();
                     Thread.sleep(DELAY);
                 }
