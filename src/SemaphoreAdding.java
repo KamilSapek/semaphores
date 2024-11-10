@@ -5,6 +5,7 @@ public class SemaphoreAdding {
 
     private static final Semaphore a = new Semaphore(1, true);
     private static final Semaphore b = new Semaphore(0, true);
+    private static final Semaphore c = new Semaphore(0, true);
 
     private static int l1;
     private static int l2;
@@ -12,6 +13,7 @@ public class SemaphoreAdding {
     public static void main(String[] args) {
         new A().start(); //runs a thread defined below
         new B().start();
+        new C().start();
     }
 
     private static final class A extends Thread { //thread definition
@@ -39,6 +41,23 @@ public class SemaphoreAdding {
             try {
                 b.acquire();
                 l2 = 40;
+                c.release();
+                Thread.sleep(DELAY);
+            } catch (InterruptedException ex) {
+                System.out.println("Cos poszlo nie tak");
+                Thread.currentThread().interrupt();
+                throw new RuntimeException(ex);
+            }
+            System.out.println("\nThread B: I'm done...");
+        }
+    }
+
+    private static final class C extends Thread { //thread definition
+        @Override
+        @SuppressWarnings("SleepWhileInLoop")
+        public void run() {
+            try {
+                c.acquire();
                 System.out.println(l1 + l2);
                 a.release();
                 Thread.sleep(DELAY);
@@ -47,7 +66,7 @@ public class SemaphoreAdding {
                 Thread.currentThread().interrupt();
                 throw new RuntimeException(ex);
             }
-            System.out.println("\nThread B: I'm done...");
+            System.out.println("\nThread C: I'm done...");
         }
     }
 }
