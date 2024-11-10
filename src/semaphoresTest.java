@@ -23,8 +23,8 @@ public class semaphoresTest {
                     a.acquire();
                     System.out.print("A ");
                     c.release();
+                    Thread.sleep(DELAY);
                 }
-                Thread.sleep(DELAY);
             } catch (InterruptedException ex) {
                 System.out.println("Cos poszlo nie tak");
                 Thread.currentThread().interrupt();
@@ -43,8 +43,8 @@ public class semaphoresTest {
                     b.acquire();
                     System.out.print("B ");
                     a.release();
+                    Thread.sleep(DELAY);
                 }
-                Thread.sleep(DELAY);
             } catch (InterruptedException ex) {
                 System.out.println("Cos poszlo nie tak");
                 Thread.currentThread().interrupt();
@@ -67,8 +67,8 @@ public class semaphoresTest {
                     } else {
                         b.release();
                     }
+                    Thread.sleep(DELAY);
                 }
-                Thread.sleep(DELAY);
             } catch (InterruptedException ex) {
                 System.out.println("Cos poszlo nie tak");
                 Thread.currentThread().interrupt();
