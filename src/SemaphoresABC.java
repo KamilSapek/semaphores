@@ -1,7 +1,7 @@
 import java.util.concurrent.Semaphore;
 
 public class SemaphoresABC {
-    private static final int COUNT = 3;
+    private static final int COUNT = 10;
     private static final int DELAY = 5;
 
     private static final Semaphore a = new Semaphore(1, true);
@@ -22,7 +22,8 @@ public class SemaphoresABC {
                 for (int i = 0; i < COUNT; i++) {
                     a.acquire();
                     System.out.println("A ");
-                    c.release();
+                    System.out.println("A ");
+                    b.release();
                     Thread.sleep(DELAY);
                 }
             } catch (InterruptedException ex) {
@@ -39,10 +40,10 @@ public class SemaphoresABC {
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
             try {
-                for (int i = 0; i < COUNT - 1 ; i++) {
+                for (int i = 0; i < COUNT ; i++) {
                     b.acquire();
                     System.out.println("B ");
-                    a.release();
+                    c.release();
                     Thread.sleep(DELAY);
                 }
             } catch (InterruptedException ex) {
@@ -62,7 +63,7 @@ public class SemaphoresABC {
                 for (int i = 0; i < COUNT; i++) {
                     c.acquire();
                     System.out.println("C ");
-                    b.release();
+                    a.release();
                     Thread.sleep(DELAY);
                 }
             } catch (InterruptedException ex) {
