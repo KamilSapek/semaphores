@@ -6,14 +6,17 @@ public class SemaphoreAdding {
     private static final Semaphore a = new Semaphore(1, true);
     private static final Semaphore b = new Semaphore(0, true);
     private static final Semaphore c = new Semaphore(0, true);
+    private static final Semaphore d = new Semaphore(0, true);
 
-    private static int l1;
-    private static int l2;
+    private static int A = 0;
+    private static int B = 0;
+    private static int C = 3;
 
     public static void main(String[] args) {
         new A().start(); //runs a thread defined below
         new B().start();
         new C().start();
+        new D().start();
     }
 
     private static final class A extends Thread { //thread definition
@@ -22,8 +25,11 @@ public class SemaphoreAdding {
         public void run() {
             try {
                 a.acquire();
-                l1 = 26;
+                A = 10;
                 b.release();
+                a.acquire();
+                B = B + 5;
+                C = C + A;
                 Thread.sleep(DELAY);
             } catch (InterruptedException ex) {
                 System.out.println("Cos poszlo nie tak");
@@ -40,8 +46,10 @@ public class SemaphoreAdding {
         public void run() {
             try {
                 b.acquire();
-                l2 = 40;
+                B = B + C;
                 c.release();
+                b.acquire();
+                A = A + B;
                 Thread.sleep(DELAY);
             } catch (InterruptedException ex) {
                 System.out.println("Cos poszlo nie tak");
@@ -58,8 +66,11 @@ public class SemaphoreAdding {
         public void run() {
             try {
                 c.acquire();
-                System.out.println(l1 + l2);
-                a.release();
+                C = B + 10;
+                d.release();
+                c.acquire();
+                A = 2 * A;
+                B = B + A;
                 Thread.sleep(DELAY);
             } catch (InterruptedException ex) {
                 System.out.println("Cos poszlo nie tak");
@@ -67,6 +78,26 @@ public class SemaphoreAdding {
                 throw new RuntimeException(ex);
             }
             System.out.println("\nThread C: I'm done...");
+        }
+    }
+
+    private static final class D extends Thread { //thread definition
+        @Override
+        @SuppressWarnings("SleepWhileInLoop")
+        public void run() {
+            try {
+                d.acquire();
+                System.out.println(A + B + C);
+                a.release();
+                b.release();
+                c.release();
+                Thread.sleep(DELAY);
+            } catch (InterruptedException ex) {
+                System.out.println("Cos poszlo nie tak");
+                Thread.currentThread().interrupt();
+                throw new RuntimeException(ex);
+            }
+            System.out.println("\nThread D: I'm done...");
         }
     }
 }
