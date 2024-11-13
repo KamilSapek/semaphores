@@ -1,6 +1,6 @@
 import java.util.concurrent.Semaphore;
 
-public class semaphoresTest {
+public class SemaphoresABC2 {
     private static final int COUNT = 10;
     private static final int DELAY = 5;
 

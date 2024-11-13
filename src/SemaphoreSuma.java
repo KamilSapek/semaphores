@@ -1,6 +1,6 @@
 import java.util.concurrent.Semaphore;
 
-public class SemaphoreAdding {
+public class SemaphoreSuma {
     private static final int DELAY = 5;
 
     private static final Semaphore a = new Semaphore(1, true);
@@ -88,9 +88,9 @@ public class SemaphoreAdding {
             try {
                 d.acquire();
                 System.out.println(A + B + C);
-                a.release();
-                b.release();
                 c.release();
+                b.release();
+                a.release();
                 Thread.sleep(DELAY);
             } catch (InterruptedException ex) {
                 System.out.println("Cos poszlo nie tak");
